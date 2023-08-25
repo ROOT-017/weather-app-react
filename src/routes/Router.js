@@ -6,6 +6,7 @@ import SendRequest from "../client/api";
 import { currentWeather } from "../pages/Home";
 import { EventLoader } from "../pages/Detail";
 import LoadingUi from "../components/LoadingUi";
+import { currentWeatherLoader } from "../pages/Explore";
 
 const Explore = lazy(() => import("../pages/Explore"));
 const Detail = lazy(() => import("../pages/Detail"));
@@ -19,17 +20,12 @@ const Router = createBrowserRouter([
         index: true,
         element: <Home />,
         id: "home",
-        // loader: currentWeather,
       },
       {
         path: "/explore",
-        element: (
-          <Suspense fallback={<LoadingUi loading={true} />}>
-            <Await>
-              <Explore />
-            </Await>
-          </Suspense>
-        ),
+        loader: currentWeatherLoader,
+        id: "weather-explore",
+        element: <Explore />,
       },
       {
         path: "/profile",
@@ -39,13 +35,7 @@ const Router = createBrowserRouter([
         path: "/detail/:id",
         loader: EventLoader,
         id: "weather-detail",
-        element: (
-          <Suspense fallback={<div>Loading</div>}>
-            <Await>
-              <Detail />
-            </Await>
-          </Suspense>
-        ),
+        element: <Detail />,
       },
     ],
   },

@@ -41,6 +41,8 @@ const Home = () => {
   const getPosition = useCallback(() => {
     navigator.geolocation.getCurrentPosition(async (e) => {
       try {
+        localStorage.setItem("lat", e.coords.latitude);
+        localStorage.setItem("lon", e.coords.longitude);
         setPositionHandler(e.coords.latitude, e.coords.longitude);
       } catch (e) {
         console.log(e);
