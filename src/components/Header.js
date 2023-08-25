@@ -5,19 +5,16 @@ import moment from "moment";
 
 const Header = () => {
   const currentTime = new Date();
-  const { currentWeather } = useContext(Contex);
   const day = moment().format("LLLL").split(" ");
-  
 
   //Constomize the greeting
   let greeting;
-
   if (currentTime.getHours() < 12) {
     greeting = "Good Morning";
   } else if (currentTime.getHours() < 18) {
     greeting = "Good Afternoon";
   } else {
-    greeting = "Good  Evening";
+    greeting = "Good Evening";
   }
   return (
     <div className="flex w-full justify-between p-4 font-Popins">

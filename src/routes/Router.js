@@ -1,9 +1,11 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Await, createBrowserRouter } from "react-router-dom";
 import RootLayout from "../pages/layout/RootLayout";
 import { Suspense, lazy } from "react";
 import Home from "../pages/Home";
 import SendRequest from "../client/api";
 import { currentWeather } from "../pages/Home";
+import { EventLoader } from "../pages/Detail";
+import LoadingUi from "../components/LoadingUi";
 
 const Explore = lazy(() => import("../pages/Explore"));
 const Detail = lazy(() => import("../pages/Detail"));
@@ -22,8 +24,10 @@ const Router = createBrowserRouter([
       {
         path: "/explore",
         element: (
-          <Suspense fallback={<div>Loading</div>}>
-            <Explore />
+          <Suspense fallback={<LoadingUi loading={true} />}>
+            <Await>
+              <Explore />
+            </Await>
           </Suspense>
         ),
       },
@@ -33,9 +37,13 @@ const Router = createBrowserRouter([
       },
       {
         path: "/detail/:id",
+        loader: EventLoader,
+        id: "weather-detail",
         element: (
           <Suspense fallback={<div>Loading</div>}>
-            <Detail />
+            <Await>
+              <Detail />
+            </Await>
           </Suspense>
         ),
       },

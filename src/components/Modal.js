@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import Search from "./Search";
 import Contex from "../store/Contex";
 import SendRequest from "../client/api";
-import { TbH1 } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
 
 const Backdrop = (props) => {
@@ -35,7 +34,9 @@ const Modal = (props) => {
         {searchResults.length > 0 &&
           searchResults.map((result) => (
             <NavLink
-              to={`/detail/` + result.name.toLowerCase()}
+              to={`/detail/${result.name.toLowerCase()}?lat=${result.lat}&lon=${
+                result.lon
+              }`}
               key={result.id}
               onClick={closeModal}
             >
@@ -66,7 +67,6 @@ const ModalOverlay = (props) => {
   const searchHandler = useCallback(async () => {
     const endpoint = `/search.json`;
     const res = await SendRequest("GET", endpoint, null, searchTerms);
-    console.log(res);
     setResults([...res]);
   }, [searchTerms]);
 

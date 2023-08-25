@@ -8,8 +8,12 @@ import { Carousel } from "primereact/carousel";
 import Card from "../components/ui/Card";
 
 import cloud from "./assets/rain-drops.png";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Contex from "../store/Contex";
+
+import Spinder from "../components/ui/Spinder";
+
+import LoadingUi from "../components/LoadingUi";
 
 const ProductService = [
   {
@@ -106,9 +110,23 @@ const Home = () => {
           itemTemplate={weather}
           showNavigators={false}
         /> */}
+        {!currentWeather && <Spinder />}
         {currentWeather && (
           <NavLink
-            to={`detail/` + currentWeather.location.region.toLowerCase()}
+            to={
+              `detail/` +
+              currentWeather.location.region.toLowerCase() +
+              "?" +
+              `lat=` +
+              currentWeather.location.lat +
+              `&` +
+              `lon=` +
+              currentWeather.location.lon
+            }
+            params={{
+              lat: currentWeather.location.lat,
+              lon: currentWeather.location.lon,
+            }}
           >
             <WeatherCard currentWeather={currentWeather} />
           </NavLink>

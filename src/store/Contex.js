@@ -9,15 +9,17 @@ const Contex = React.createContext({
     lon: 0,
   },
   currentWeather: null,
-  setCurrentWeather: () => {},
+  setCurrentWeather: (data) => {},
   setPositionHandler: () => {},
+  isLoading: true,
+  toggleLoading: () => {},
 });
 
 export const ContexProvider = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentWeather, setCurrentWeather] = useState(null);
   const [position, setPosition] = useState({ lat: 0, lon: 0 });
-
+  const [isLoading, setIsLoading] = useState(false);
   const openModal = useCallback(() => {
     setIsModalOpen(true);
   }, []);
@@ -30,6 +32,10 @@ export const ContexProvider = ({ children }) => {
     setPosition({ lat, lon });
   }, []);
 
+  const toggleLoading = () => {
+    setIsLoading((prevState) => !prevState);
+  };
+
   return (
     <Contex.Provider
       value={{
@@ -40,6 +46,8 @@ export const ContexProvider = ({ children }) => {
         setPositionHandler,
         currentWeather,
         setCurrentWeather,
+        isLoading,
+        toggleLoading,
       }}
     >
       {children}

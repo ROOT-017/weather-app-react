@@ -4,6 +4,7 @@ import MainNavigation from "../navigation/MainNavigation";
 
 import ModalOverlay from "../../components/Modal";
 import { useLocation } from "react-router-dom";
+import LoadingUi from "../../components/LoadingUi";
 
 const RootLayout = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const RootLayout = () => {
   }
   return (
     <div className={styles}>
+      <LoadingUi />
       <ModalOverlay />
       <Outlet />
       <MainNavigation />

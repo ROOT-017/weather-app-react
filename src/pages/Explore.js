@@ -27,7 +27,6 @@ const Export = (props) => {
           <span className="text-[6em] font-bold">
             {currentWeather.current.temp_c}&deg;
           </span>
-          {/* <span className="text-[4em]">&deg;</span> */}
         </div>
         <div className="flex justify-between items-baseline font-Roboto">
           <div className="">
