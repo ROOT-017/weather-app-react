@@ -23,26 +23,26 @@ const Export = (props) => {
     <div className=" h-max text-white font-Roboto">
       <SubHeader city={currentWeather.location.region} rainProbalilty={30} />
       <div className="flex items-center flex-col w-full">
-        <p className=" font-bold">
+        <div className=" font-bold">
           <span className="text-[6em] font-bold">
             {currentWeather.current.temp_c}&deg;
           </span>
           {/* <span className="text-[4em]">&deg;</span> */}
-        </p>
+        </div>
         <div className="flex justify-between items-baseline font-Roboto">
-          <p className="">
+          <div className="">
             <h2 className="text-center text-sm">wind</h2>
             <h2 className="text-center">
               {currentWeather.current.wind_kph}km/h
             </h2>
-          </p>
-          <p>
+          </div>
+          <div>
             <img src={cloud} alt="storm-cloud" className="h-48 w-48" />
-          </p>
-          <p>
+          </div>
+          <div>
             <h2 className="text-center text-sm">Humidity</h2>
             <h2 className="text-center">{currentWeather.current.humidity}</h2>
-          </p>
+          </div>
         </div>
       </div>
       <div className="flex justify-center w-full">

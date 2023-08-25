@@ -18,6 +18,7 @@ const Search = (props) => {
             name="search"
             id="search"
             ref={searchRef}
+            onChange={handleForm}
             className="p-2 w-full text-lg  border-none outline-none"
             placeholder="Example Yaounde"
           />
