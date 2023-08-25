@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import Router from "./routes/Router";
+import "primereact/resources/primereact.min.css";
+import { ContexProvider } from "./store/Contex";
 
-import AddUser from './components/Users/AddUser';
-import UsersList from './components/Users/UsersList';
+// import "~slick-carousel/slick/slick.css";
+// import "~slick-carousel/slick/slick-theme.css";
 
-function App() {
-  const [usersList, setUsersList] = useState([]);
-
-  const addUserHandler = (uName, uAge) => {
-    setUsersList((prevUsersList) => {
-      return [
-        ...prevUsersList,
-        { name: uName, age: uAge, id: Math.random().toString() },
-      ];
-    });
-  };
-
+const App = () => {
   return (
-    <div>
-      <AddUser onAddUser={addUserHandler} />
-      <UsersList users={usersList} />
-    </div>
+    <ContexProvider>
+      <RouterProvider router={Router} />
+    </ContexProvider>
   );
-}
+};
 
 export default App;
