@@ -1,11 +1,8 @@
-import { Await, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../pages/layout/RootLayout";
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import Home, { lastSearchLoader } from "../pages/Home";
-import SendRequest from "../client/api";
-import { currentWeather } from "../pages/Home";
 import { EventLoader } from "../pages/Detail";
-import LoadingUi from "../components/LoadingUi";
 import { currentWeatherLoader } from "../pages/Explore";
 
 const Explore = lazy(() => import("../pages/Explore"));
@@ -27,10 +24,6 @@ const Router = createBrowserRouter([
         loader: currentWeatherLoader,
         id: "weather-explore",
         element: <Explore />,
-      },
-      {
-        path: "/profile",
-        element: <div>Profile</div>,
       },
       {
         path: "/detail/:id",

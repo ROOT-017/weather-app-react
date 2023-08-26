@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import Profile from "./Profile";
-import Contex from "../store/Contex";
 import moment from "moment";
 
 const Header = () => {
@@ -17,7 +16,7 @@ const Header = () => {
     greeting = "Good Evening";
   }
   return (
-    <div className="flex w-full justify-between p-4 font-Popins">
+    <div className="flex w-full justify-between px-4 pt-4 font-Popins">
       <div>
         <p className=" font-bold text-3xl">
           {greeting.split(" ")[0]} <br />

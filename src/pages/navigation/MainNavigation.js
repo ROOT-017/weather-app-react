@@ -10,7 +10,7 @@ import { CgHome } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
 import { MdOutlineExplore } from "react-icons/md";
 
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const MainNavigation = () => {
   const Contx = useContext(Contex);
@@ -54,16 +54,9 @@ const MainNavigation = () => {
                 <MdOutlineExplore />
               </li>
             </NavLink>
-            <NavLink
-              to="/profile"
-              className={({ isActive }) => {
-                return isActive ? "active" : "";
-              }}
-            >
-              <li>
-                <Profile style={`w-[1.5em] h-[1.5em]`} />
-              </li>
-            </NavLink>
+            <li>
+              <Profile style={`w-[1.5em] h-[1.5em]`} />
+            </li>
           </ul>
         </nav>
       </Card>

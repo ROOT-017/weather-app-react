@@ -5,7 +5,7 @@ const SubHeader = (props) => {
   const chancesOfRainMessage = `Chances of rain: ${rainProbalilty}%`;
   return (
     <>
-      <h1 className="text-center text-3xl px-4 pt-4 font-bold font-Roboto text-white">
+      <h1 className="text-center text-3xl px-4 font-bold font-Roboto text-white">
         {city}
       </h1>
 

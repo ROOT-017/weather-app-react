@@ -1,17 +1,10 @@
-import React, {
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import SubHeader from "../components/SubHeader";
 import cloud from "./assets/storm.png";
-import FurtherWeather from "../components/FurtherWeather";
 import Contex from "../store/Contex";
 import { useContext } from "react";
 import queryString from "query-string";
-import { Await, defer, useParams, useRoutes } from "react-router-dom";
+import { Await, defer } from "react-router-dom";
 import SendRequest from "../client/api";
 import HistoryItem from "./HistoryItem";
 import LoadingUi from "../components/LoadingUi";
@@ -75,25 +68,26 @@ const WeatherDetail = (props) => {
   }, [isFavorite, lat, lon, color]);
 
   return (
-    <div className="w-full px-4">
-      <SubHeader city={data.location.region} rainProbalilty={30} />
-      <Suspense fallback={<LoadingUi loading={true} />}>
-        <Await resolve={data}>
-          {(data) => (
-            <div className="flex justify-around items-center">
-              <div>
-                <img src={cloud} alt="cloud" className="h-28 w-28  " />
+    <div className="w-full flex flex-col justify-between h-[96vh] px-4">
+      <div>
+        <SubHeader city={data.location.region} rainProbalilty={30} />
+        <Suspense fallback={<LoadingUi loading={true} />}>
+          <Await resolve={data}>
+            {(data) => (
+              <div className="flex justify-around items-center">
+                <div>
+                  <img src={cloud} alt="cloud" className="h-28 w-28  " />
+                </div>
+                <div>
+                  <span className="text-[6em] font-bold text-white">
+                    {data.current.temp_c}&deg;
+                  </span>
+                </div>
               </div>
-              <div>
-                <span className="text-[6em] font-bold text-white">
-                  {data.current.temp_c}&deg;
-                </span>
-              </div>
-            </div>
-          )}
-        </Await>
-      </Suspense>
-
+            )}
+          </Await>
+        </Suspense>
+      </div>
       <div className="rounded-3xl bg-white">
         <div className="flex justify-center pt-2">
           <div className="bg-primary-300 h-3 rounded-full w-1/3"></div>
@@ -102,7 +96,6 @@ const WeatherDetail = (props) => {
           <span className="text-xl font-Roboto py-4 text-gray-500  font-semibold">
             Weather History
           </span>
-
           <span>
             <BsFillHeartFill
               size={`1.5em`}

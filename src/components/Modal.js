@@ -88,7 +88,6 @@ const ModalOverlay = (props) => {
   const searchHandler = useCallback(async () => {
     const endpoint = `/search.json`;
     const res = await SendRequest("GET", endpoint, null, { q: searchTerms });
-    console.log(res[0]);
     if (!res.length) return;
     const lastSearch = {
       name: res[0]?.name,

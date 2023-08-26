@@ -1,51 +1,20 @@
-import React, {
-  useEffect,
-  useState,
-  useContext,
-  useCallback,
-  Suspense,
-} from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import Header from "../components/Header";
 import WeatherCard from "../components/WeatherCard";
 
 import SendRequest from "../client/api";
 
-import { Carousel } from "primereact/carousel";
 import Card from "../components/ui/Card";
 
 import cloud from "./assets/storm.png";
-import {
-  Await,
-  Link,
-  NavLink,
-  defer,
-  useRouteLoaderData,
-} from "react-router-dom";
+import { NavLink, defer } from "react-router-dom";
 import Contex from "../store/Contex";
 
 import Spinder from "../components/ui/Spinder";
 
-import LoadingUi from "../components/LoadingUi";
-
-const ProductService = [
-  {
-    id: "13000",
-    code: "f230fh0g3",
-    name: "Bamboo Watch",
-    description: "Product Description",
-    image: "bamboo-watch.jpg",
-    price: 65,
-    category: "Accessories",
-    quantity: 24,
-    inventoryStatus: "INSTOCK",
-    rating: 5,
-  },
-];
 
 const Home = () => {
-  const [products, setProducts] = useState([...ProductService]);
   const {
-    toastHandler,
     setPositionHandler,
     position,
     setCurrentWeather,
@@ -80,7 +49,7 @@ const Home = () => {
     }
   }, [position.lat, position.lon, setCurrentWeather]);
 
-  const { data, error } = useRouteLoaderData("home");
+  // const { data, error } = useRouteLoaderData("home");
 
   useEffect(() => {
     getPosition();
@@ -97,46 +66,11 @@ const Home = () => {
     }
   }, []);
 
-  // if (error) {
-  //   console.log(error);
-  //   toastHandler({
-  //     severity: "error",
-  //     summary: "Error Message",
-  //     detail: error.message,
-  //   });
-  // }
-
-  const responsiveOptions = [
-    {
-      breakpoint: "1199px",
-      numVisible: 1,
-      numScroll: 1,
-    },
-    {
-      breakpoint: "991px",
-      numVisible: 2,
-      numScroll: 1,
-    },
-    {
-      breakpoint: "767px",
-      numVisible: 1,
-      numScroll: 1,
-    },
-  ];
 
   return (
     <div>
       <Header />
       <div className="carousel md:w-[390px]">
-        {/* <Carousel
-          value={currentWeather ? currentWeather : products}
-          numVisible={1}
-          numScroll={1}
-          className="custom-carousel"
-          circular
-          itemTemplate={weather}
-          showNavigators={false}
-        /> */}
         {!currentWeather && <Spinder />}
         {currentWeather && (
           <NavLink
@@ -221,11 +155,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="w-2/3 flex justify-center items-center h-full">
-                  <img
-                    src={cloud}
-                    alt="sunny-cloud"
-                    className="w-32 h-32"
-                  />
+                  <img src={cloud} alt="sunny-cloud" className="w-32 h-32" />
                 </div>
               </div>
             </Card>
