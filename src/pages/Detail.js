@@ -10,6 +10,7 @@ import HistoryItem from "./HistoryItem";
 import LoadingUi from "../components/LoadingUi";
 import { useRouteLoaderData, useLocation } from "react-router-dom";
 import { BsFillHeartFill } from "react-icons/bs";
+import Spinder from "../components/ui/Spinder";
 
 const WeatherDetail = (props) => {
   const { toggleLoading, isFavorite, addFavorite, removeFavorite } =
@@ -105,6 +106,11 @@ const WeatherDetail = (props) => {
           </span>
         </p>
         <ul className="px-4 pb-4 flex flex-col gap-3">
+          {!weatherHistory.length > 0 && (
+            <div className="h-full w-full flex justify-center items-center">
+              <Spinder />
+            </div>
+          )}
           {weatherHistory.map((weather) => (
             <HistoryItem data={weather} key={weather.date} />
           ))}
