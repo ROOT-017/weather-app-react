@@ -93,12 +93,9 @@ export const currentWeatherLoader = async (props) => {
   };
   // const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
   const endpoint = "/current.json";
-  const response = await SendRequest(
-    "GET",
-    endpoint,
-    null,
-    `${coords.lat},${coords.lon}`
-  );
+  const response = await SendRequest("GET", endpoint, null, {
+    q: `${coords.lat},${coords.lon}`,
+  });
   return defer({
     data: response,
   });

@@ -4,6 +4,11 @@ import Search from "./Search";
 import Contex from "../store/Contex";
 import SendRequest from "../client/api";
 import { NavLink } from "react-router-dom";
+import Spinder from "./ui/Spinder";
+import getSearchedHistory from "../util/getSearchHistory";
+import cloud from "../pages/assets/storm.png";
+
+var typeCount = false;
 
 const Backdrop = (props) => {
   const Contx = useContext(Contex);
@@ -21,16 +26,32 @@ const Backdrop = (props) => {
     ></div>
   );
 };
+
 const Modal = (props) => {
   const { closeModal } = useContext(Contex);
-  const { searchResults } = props;
+  const { searchResults, searchTerms, isTyping } = props;
+
+  if (searchTerms.length > 0) {
+    typeCount = true;
+  } else {
+    typeCount = false;
+  }
+
   return (
     <div className="absolute top-0 right-0 w-full z-50 bg-primary-100">
       <Search setSearchTerm={props.setSearchTerm} />
+
       <ul className="px-4">
-        {!searchResults.length && (
-          <h1 className="text-xl text-center pb-2 font-Roboto">No Result</h1>
+        {!typeCount && (
+          <h1 className="text-xl text-center pb-2 font-Roboto">Search above</h1>
         )}
+        {typeCount && !searchResults.length && (
+          <h1 className="text-xl text-center pb-2 font-Roboto text-gray-400">
+            No Result
+          </h1>
+        )}
+        {typeCount && isTyping && <Spinder />}
+
         {searchResults.length > 0 &&
           searchResults.map((result) => (
             <NavLink
@@ -48,7 +69,7 @@ const Modal = (props) => {
                   <img src={`https://` + result.url} alt={result.id} />
                 </span>
                 <span>{result.name}</span>
-                <span>{result.country}</span>
+                <span>{result.typeCountry}</span>
               </li>
             </NavLink>
           ))}
@@ -56,23 +77,40 @@ const Modal = (props) => {
     </div>
   );
 };
-
 const ModalOverlay = (props) => {
   const [searchTerms, setSearchTerm] = useState("");
   const [result, setResults] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const Contx = useContext(Contex);
   const modelState = Contx.isModalOpen;
 
   const searchHandler = useCallback(async () => {
     const endpoint = `/search.json`;
-    const res = await SendRequest("GET", endpoint, null, searchTerms);
+    const res = await SendRequest("GET", endpoint, null, { q: searchTerms });
+    console.log(res[0]);
+    if (!res.length) return;
+    const lastSearch = {
+      name: res[0]?.name,
+      lat: res[0]?.lat,
+      lon: res[0]?.lon,
+      temp_c: res[0]?.temp_c || 23,
+      icon: cloud,
+    };
+
+    //if the last search is an empty object, return
+    if (Object.keys(lastSearch).length === 0) return;
+    localStorage.setItem("lastSearch", JSON.stringify(lastSearch));
+    getSearchedHistory(lastSearch);
+
     setResults([...res]);
   }, [searchTerms]);
 
   useEffect(() => {
+    setIsTyping(true);
     const timer = setTimeout(() => {
-      if (searchTerms === "") return;
+      if (searchTerms.length === 0) return;
+      setIsTyping(false);
       searchHandler();
     }, 700);
     return () => {
@@ -92,7 +130,12 @@ const ModalOverlay = (props) => {
         )}
       {modelState &&
         ReactDOM.createPortal(
-          <Modal setSearchTerm={setSearchTerm} searchResults={result} />,
+          <Modal
+            setSearchTerm={setSearchTerm}
+            searchTerms={searchTerms}
+            searchResults={result}
+            isTyping={isTyping}
+          />,
           modal
         )}
     </>

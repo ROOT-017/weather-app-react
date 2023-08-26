@@ -1,7 +1,7 @@
 import { Await, createBrowserRouter } from "react-router-dom";
 import RootLayout from "../pages/layout/RootLayout";
 import { Suspense, lazy } from "react";
-import Home from "../pages/Home";
+import Home, { lastSearchLoader } from "../pages/Home";
 import SendRequest from "../client/api";
 import { currentWeather } from "../pages/Home";
 import { EventLoader } from "../pages/Detail";
@@ -20,6 +20,7 @@ const Router = createBrowserRouter([
         index: true,
         element: <Home />,
         id: "home",
+        loader: lastSearchLoader,
       },
       {
         path: "/explore",

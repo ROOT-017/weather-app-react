@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 
 const Search = (props) => {
   const searchRef = useRef();
+
   const handleForm = (e) => {
     e.preventDefault();
     if (searchRef.current.value === "") return;
