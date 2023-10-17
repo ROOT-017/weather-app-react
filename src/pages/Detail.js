@@ -12,6 +12,16 @@ import { useRouteLoaderData, useLocation } from "react-router-dom";
 import { BsFillHeartFill } from "react-icons/bs";
 import Spinder from "../components/ui/Spinder";
 
+const getPastDate = () => {
+  const today = new Date();
+  const pastDate = new Date(today);
+  pastDate.setDate(pastDate.getDate() - 5);
+  const pastDateFormated = pastDate.toISOString().split("T")[0];
+  return {
+    dt: pastDateFormated,
+    end_dt: today.toISOString().split("T")[0],
+  };
+};
 const WeatherDetail = (props) => {
   const { toggleLoading, isFavorite, addFavorite, removeFavorite } =
     useContext(Contex);
@@ -26,9 +36,9 @@ const WeatherDetail = (props) => {
   const getWeatherHistory = useCallback(async () => {
     const res = await SendRequest("GET", "/history.json", null, {
       q: `${lat},${lon}`,
-      dt: "2023-08-23",
+      dt: getPastDate().dt,
       lang: "en",
-      end_dt: "2023-08-26",
+      end_dt: getPastDate().end_dt,
     });
     setWeatherHistory([...res.forecast.forecastday]);
     return res;
